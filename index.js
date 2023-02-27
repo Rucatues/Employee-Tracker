@@ -9,6 +9,7 @@ function menu() {
             message: 'Welcome to the Employee Tracker! What would you like to do?',
             name: 'nextstep',
             choices: [
+                'View All Employees',
                 'Add Employee',
                 'Update Employee Role',
                 'View All Roles',
@@ -20,8 +21,10 @@ function menu() {
     ])
         .then((data) => {
             console.log(data);
-
-            if (data.nextstep === 'Add Employee') {
+            if (data.nextstep === 'View All Employees') {
+                viewAllEmployees();
+            }
+            else if (data.nextstep === 'Add Employee') {
                 addEmployee();
             } else if (data.nextstep === 'Update Employee Role') {
                 updateEmployee();
@@ -39,6 +42,11 @@ function menu() {
         })
 }
 
+
+function viewAllEmployees() {
+    console.log("viewing all employees");
+};
+
 function addEmployee() {
     console.log("added employee");
 };
@@ -49,6 +57,8 @@ function updateEmployee() {
 
 function viewAllRoles() {
     console.log("viewing all roles");
+    // WHEN I choose to view all roles
+    // THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
 };
 
 function addRole() {
@@ -57,6 +67,8 @@ function addRole() {
 
 function viewAllDepartments() {
     console.log("viewing all departments");
+    // WHEN I choose to view all departments
+    // THEN I am presented with a formatted table showing department names and department ids
 };
 
 function addDepartment() {
