@@ -1,11 +1,11 @@
-DROP DATABASE IF EXISTS employees_db; 
+DROP DATABASE IF EXISTS hospitalemployees_db; 
 
-CREATE DATABASE employees_db; 
+CREATE DATABASE hospitalemployees_db; 
 
-USE employees_db; 
+USE hospitalemployees_db; 
 
 CREATE TABLE departments (
-     id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     department_name VARCHAR(30) NOT NULL,
     PRIMARY KEY (id)
 );
