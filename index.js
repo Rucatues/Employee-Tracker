@@ -2,6 +2,8 @@ const inquirer = require('inquirer');
 const cTable = require('console.table');
 const mysql = require('mysql2');
 
+
+// ====================Establishing mysql connection====================
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -11,6 +13,7 @@ const db = mysql.createConnection({
     console.log("You are now connected to the hospital employees database")
 );
 
+// ====================Main Menu====================
 function menu() {
     inquirer.prompt([
         {
@@ -51,7 +54,7 @@ function menu() {
         })
 }
 
-
+// ====================Menu options====================
 function viewAllEmployees() {
     console.log("viewing all employees");
     // WHEN I choose to view all employees
