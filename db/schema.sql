@@ -5,14 +5,14 @@ CREATE DATABASE employees_db;
 USE employees_db; 
 
 CREATE TABLE department (
-     id INT NOT NULL,
+     id INT NOT NULL PRIMARY KEY,
     --  how to make id primary Key? 
     department_name VARCHAR(30) NOT NULL
     -- name: VARCHAR(30) to hold department name
 );
 
 CREATE TABLE role (
-     id INT NOT NULL,
+     id INT NOT NULL PRIMARY KEY,
     --  how to make id primary Key? 
     title VARCHAR(30) NOT NULL,
         -- title: VARCHAR(30) to hold role title
@@ -24,7 +24,7 @@ CREATE TABLE role (
 
 
 CREATE TABLE employee (
-     id INT NOT NULL,
+     id INT NOT NULL PRIMARY KEY,
     --  how to make id primary Key? 
     first_name VARCHAR(30) NOT NULL, 
         -- first_name: VARCHAR(30) to hold employee first name
