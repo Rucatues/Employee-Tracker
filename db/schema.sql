@@ -7,7 +7,7 @@ USE employees_db;
 CREATE TABLE department (
      id INT NOT NULL,
     --  how to make id primary Key? 
-    name VARCHAR(30) NOT NULL,
+    department_name VARCHAR(30) NOT NULL
     -- name: VARCHAR(30) to hold department name
 );
 

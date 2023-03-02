@@ -1,0 +1,1 @@
+INSERTR INTO department ()
