@@ -1,9 +1,9 @@
-INSERT INTO department (id, department_name)
-VALUES (001, "Dummy Dept Name 1"),
-       (002, "Dummy Dept Name 2"),
-       (003, "Dummy Dept Name 3"),
-       (004, "Dummy Dept Name 4"),
-       (005, "Dummy Dept Name 5");
+INSERT INTO department (department_name)
+VALUES ("Dummy Dept Name 1"),
+       ("Dummy Dept Name 2"),
+       ("Dummy Dept Name 3"),
+       ("Dummy Dept Name 4"),
+       ("Dummy Dept Name 5");
 
 INSERT INTO role (id, title, salary, department_id)
 VALUES (001, "Manager", 100000.00, 1111),
