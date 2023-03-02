@@ -1,22 +1,21 @@
 INSERT INTO departments (department_name)
-VALUES ("Dummy Dept Name 1"),
-       ("Dummy Dept Name 2"),
-       ("Dummy Dept Name 3"),
-       ("Dummy Dept Name 4"),
-       ("Dummy Dept Name 5");
+VALUES ("Upper Management"),
+       ("Clinical staff"),
+       ("Sonography");
 
-INSERT INTO roles (id, title, salary, department_id)
-VALUES (001, "Manager", 100000.00, 1111),
-       (002, "Senior Dev", 120000.00, 2222),
-       (003, "Junior Dev", 80000.00, 3333),
-       (004, "Intern", 50000.00, 4444); 
+INSERT INTO roles (title, salary, department_id)
+VALUES ("Clinic Manager", 1000000, 1),
+       ("Nurse", 70000, 2),
+       ("Medical Assistant", 40000, 2),
+       ("Sonography Manager", 90000, 3)
+       ("Sonographer", 70000, 3); 
 
-INSERT INTO employees (id, first_name, last_name, role_id, manager_id)
-VALUES (001, "Roger", "Smith", ),
-       (002, "Senior Dev"),
-       (003, "Junior Dev"),
-       (004, "Intern"); 
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+VALUES ("Mindy", "Christensen", 1, null),
+       ("Andrea", "Smith", 2, 1),
+       ("Orelia", "Garcia", 3, 1),
+       ("Xi", "Chen", 4, null), 
+       ("Alex", "Nott", 5, 4);
 
-    --    not completed yet
 
 
