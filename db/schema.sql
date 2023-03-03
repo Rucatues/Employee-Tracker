@@ -5,9 +5,8 @@ CREATE DATABASE hospitalemployees_db;
 USE hospitalemployees_db; 
 
 CREATE TABLE departments (
-    id INT NOT NULL AUTO_INCREMENT,
-    department_name VARCHAR(30) NOT NULL,
-    PRIMARY KEY (id)
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    department_name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE roles (
@@ -16,7 +15,7 @@ CREATE TABLE roles (
     salary DECIMAL NOT NULL,
     department_id INT, 
     PRIMARY KEY (id),
-    FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE SET NULL
+    FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE SET NULL
         -- department_id: INT to hold reference to department role belongs to
 ); 
 
@@ -29,7 +28,7 @@ CREATE TABLE employees (
     manager_id INT, 
         -- manager_id: INT to hold reference to another employee that is the manager of the current employee (null if the employee has no manager)
     PRIMARY KEY (id),
-    FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET NULL,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE SET NULL
     -- FOREIGN KEY (manager_id) REFERENCES 
 );
 

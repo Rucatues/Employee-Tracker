@@ -11,9 +11,9 @@ app.use(express.json());
 
 // ====================Establishing mysql connection====================
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: '127.0.0.1',
     user: 'root',
-    password: '',
+    password: 'Mysql2323',
     database: 'hospitalemployees_db'
 },
     console.log("You are now connected to the hospital employees database")
