@@ -1,13 +1,19 @@
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 const mysql = require('mysql2');
+const express = require('express');
 
+const PORT = process.env.PORT || 3001;
+const app = express();
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // ====================Establishing mysql connection====================
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    // password: 'addpassword here',
+    password: '',
     database: 'hospitalemployees_db'
 },
     console.log("You are now connected to the hospital employees database")
@@ -103,5 +109,16 @@ function finish() {
 };
 
 menu();
+
+//====================Default response for any other request====================
+app.use((req, res) => {
+    res.status(404).end();
+});
+
+// ====================Listening to port====================
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
 
 // You might also want to make your queries asynchronous. MySQL2 exposes a .promise() function on Connections to upgrade an existing non-Promise connection to use Promises. To learn more and make your queries asynchronous, refer to the npm documentation on MySQL2Links to an external site..
