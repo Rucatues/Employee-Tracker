@@ -40,7 +40,6 @@ function menu() {
         }
     ])
         .then((data) => {
-            console.log(data);
             if (data.nextstep === 'View All Employees') {
                 viewAllEmployees();
             }
@@ -179,19 +178,32 @@ function viewAllDepartments() {
 };
 
 function addDepartment() {
-    console.log("added department");
-    // WHEN I choose to add a department
-    // THEN I am prompted to enter the name of the department and that department is added to the database
+    inquirer.prompt([{
+        type: 'input',
+        message: "What department would you like to add to the database?",
+        name: 'department'
+    }
+    ]).then((data) => {
+        db.query(`INSERT INTO departments (department_name) VALUES ("${data.department}");`, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.table(result);
+                menu();
+            }
+        })
+    });
+
 };
 
 menu();
 
-//====================Default response for any other request====================
+// ================Default for any other result===============
 app.use((req, res) => {
     res.status(404).end();
 });
 
-// ====================Listening to port====================
+// ================Listening for port===============
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
