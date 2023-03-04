@@ -162,9 +162,43 @@ function viewAllRoles() {
 };
 
 function addRole() {
-    console.log("added role");
-    // WHEN I choose to add a role
-    // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
+    inquirer.prompt([{
+        type: 'input',
+        message: "What role would you like to add?",
+        name: 'title'
+    }, {
+        type: 'input',
+        message: "What is the salary for this role?",
+        name: 'salary'
+    }, {
+        type: 'list',
+        message: "Which department does this role belong to?",
+        name: "department",
+        choices: [
+            'Upper Management',
+            'Clinical staff',
+            'Sonography'
+        ]
+    }
+    ]).then((data) => {
+        let departmentID = 1;
+        if (data.choices === 'Upper Management') {
+            departmentID = 1;
+        } else if (data.choices === 'Clinical staff') {
+            departmentID = 2;
+        }
+        else if (data.choices === "Sonography") {
+            departmentID = 3;
+        }
+        db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${data.title}", ${data.salary}, ${departmentID});`, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.table(result);
+                menu();
+            }
+        })
+    });
 };
 
 function viewAllDepartments() {
@@ -180,7 +214,7 @@ function viewAllDepartments() {
 function addDepartment() {
     inquirer.prompt([{
         type: 'input',
-        message: "What department would you like to add to the database?",
+        message: "What department would you like to add?",
         name: 'department'
     }
     ]).then((data) => {
