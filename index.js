@@ -82,62 +82,61 @@ function viewAllEmployees() {
 };
 
 function addEmployee() {
-    inquirer.prompt([{
-        type: 'input',
-        message: "What is Employee's first name?",
-        name: 'first'
-    }, {
-        type: 'input',
-        message: "What is Employees last name?",
-        name: 'last'
-    }, {
-        type: 'list',
-        message: "What is Employee role?",
-        choices: [
-            'Clinic Manager',
-            'Nurse',
-            'Medical Assistant',
-            'Sonography Manager',
-            'Sonographer'
-        ],
-        name: 'role'
-    }, {
-        type: 'list',
-        message: "Who is the manager of this Employee?",
-        choices: [
-            'Mindy Christensen',
-            'Xi Chen'
-        ],
-        name: 'manager'
-    }
-    ]).then((data) => {
-        let roleID = 1;
-        let managerID = 1;
-        if (data.choices === 'Clinic Manager') {
-            roleID = 1;
-            managerID = 'null';
+    db.query(`SELECT * FROM roles`, (err, results) => {
+        if (err) {
+            console.log(err);
         }
-        else if (data.choices === 'Nurse') {
-            roleID = 2;
-            managerID = 1;
-        } else if (data.choices === 'Medical Assistant') {
-            roleID = 2;
-            managerID = 1;
-        } else if (data.choices === 'Sonography Manager') {
-            roleID = 3;
-            managerID = 'null';
-        } else if (data.choices === 'Sonographer') {
-            roleID = 3;
-            managerID = 4;
+        let rolesArray = [];
+        for (let i = 0; i < results.length; i++) {
+            rolesArray.push(results[i].title)
         }
-        db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${data.first}", "${data.last}", ${roleID}, ${managerID})`, (err, result) => {
+        db.query(`SELECT * FROM employees`, (err, results) => {
             if (err) {
                 console.log(err);
             }
-            console.table(result);
-            menu();
+            let managerArray = [];
+            for (let i = 0; i < results.length; i++) {
+                const m = results[i].first_name + " " + results[i].last_name;
+                managerArray.push(m)
+            }
+            console.log(rolesArray)
+            inquirer.prompt([{
+                type: 'input',
+                message: "What is Employee's first name?",
+                name: 'first'
+            }, {
+                type: 'input',
+                message: "What is Employees last name?",
+                name: 'last'
+            }, {
+                type: 'list',
+                message: "What is Employee role?",
+                choices: rolesArray,
+                name: 'role'
+            }, {
+                type: 'list',
+                message: "Who is the manager of this Employee?",
+                choices: managerArray,
+                name: 'manager'
+            }
+            ]).then((data) => {
+                const roleID = rolesArray.indexOf(data.role) + 1;
+                console.log(roleID);
+                const managerID = managerArray.indexOf(data.manager) + 1;
+                console.log(managerID);
+                db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${data.first}", "${data.last}", "${roleID}", "${managerID}")`, (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.table(result);
+                    menu();
+                })
+            });
         })
-    });
+
+    }
+    )
+
 };
 
 function updateEmployee() {
@@ -157,43 +156,43 @@ function viewAllRoles() {
 };
 
 function addRole() {
-    inquirer.prompt([{
-        type: 'input',
-        message: "What role would you like to add?",
-        name: 'title'
-    }, {
-        type: 'input',
-        message: "What is the salary for this role?",
-        name: 'salary'
-    }, {
-        type: 'list',
-        message: "Which department does this role belong to?",
-        name: "department",
-        choices: [
-            'Upper Management',
-            'Clinical staff',
-            'Sonography'
-        ]
-    }
-    ]).then((data) => {
-        let departmentID = 1;
-        if (data.choices === 'Upper Management') {
-            departmentID = 1;
-        } else if (data.choices === 'Clinical staff') {
-            departmentID = 2;
+    db.query(`SELECT * FROM departments;`, (err, result) => {
+        if (err) {
+            console.log(err);
         }
-        else if (data.choices === "Sonography") {
-            departmentID = 3;
+        let departmentArray = [];
+        for (let i = 0; i < result.length; i++) {
+            const d = result[i].department_name;
+            departmentArray.push(d)
         }
-        db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${data.title}", ${data.salary}, ${departmentID});`, function (err, result) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.table(result);
-                menu();
-            }
-        })
-    });
+        inquirer.prompt([{
+            type: 'input',
+            message: "What role would you like to add?",
+            name: 'title'
+        }, {
+            type: 'input',
+            message: "What is the salary for this role?",
+            name: 'salary'
+        }, {
+            type: 'list',
+            message: "Which department does this role belong to?",
+            name: "department",
+            choices: departmentArray
+        }
+        ]).then((data) => {
+            let departmentID = departmentArray.indexOf(data.department) + 1;
+            console.log(departmentID)
+            db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${data.title}", ${data.salary}, ${departmentID});`, function (err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.table(result);
+                    menu();
+                }
+            })
+        });
+    })
+
 };
 
 function viewAllDepartments() {
