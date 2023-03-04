@@ -169,9 +169,13 @@ function addRole() {
 };
 
 function viewAllDepartments() {
-    console.log("viewing all departments");
-    // WHEN I choose to view all departments
-    // THEN I am presented with a formatted table showing department names and department ids
+    db.query(`SELECT * FROM departments;`, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        console.table(result);
+        menu();
+    });
 };
 
 function addDepartment() {
