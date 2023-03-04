@@ -59,8 +59,12 @@ function menu() {
 
 // ====================Menu options====================
 function viewAllEmployees() {
-    // WHEN I choose to view all employees
-    // THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
+    // let managerName = '';
+    // if (employees.manager_id === 1) {
+    //     managerName = 'Mindy Christensen';
+    // } else if (employees.manager_id === 2) {
+    //     managerName = 'Xi Chen';
+    // };
     db.query(`SELECT * FROM employees JOIN roles ON employees.role_id = roles.id`, (err, result) => {
         if (err) {
             console.log(err);
