@@ -60,19 +60,25 @@ function menu() {
 
 // ====================Menu options====================
 function viewAllEmployees() {
-    // let managerName = '';
-    // if (employees.manager_id === 1) {
-    //     managerName = 'Mindy Christensen';
-    // } else if (employees.manager_id === 2) {
-    //     managerName = 'Xi Chen';
-    // };
-    db.query(`SELECT * FROM employees JOIN roles ON employees.role_id = roles.id`, (err, result) => {
-        if (err) {
-            console.log(err);
-        }
-        console.table(result);
-        menu();
-    });
+    db.query(`
+        SELECT employees.id AS 'ID', 
+                employees.first_name AS 'First Name', 
+                employees.last_name AS 'Last Name', 
+                roles.title AS 'Role', 
+                departments.department_name AS 'Department Name', 
+                roles.salary AS 'Salary', 
+                manager.first_name AS 'Manager'
+                FROM employees
+                LEFT JOIN roles ON (employees.role_id = roles.id)
+                LEFT JOIN departments ON (roles.department_id = departments.id)
+                LEFT JOIN employees manager ON (employees.manager_id = manager.id)`,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            console.table(result);
+            menu();
+        });
 };
 
 function addEmployee() {
