@@ -19,8 +19,6 @@ const db = mysql.createConnection({
     console.log("You are now connected to the hospital employees database")
 );
 
-let roleID = '';
-let manager = '';
 // ====================Main Menu====================
 function menu() {
     inquirer.prompt([
@@ -77,8 +75,6 @@ function viewAllEmployees() {
         }
 };
 
-// WHEN I choose to add an employee
-// THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
 function addEmployee() {
     inquirer.prompt([{
         type: 'input',
@@ -109,40 +105,33 @@ function addEmployee() {
         name: 'manager'
     }
     ]).then((data) => {
-        setRoleIDandManagerID(data);
-        db.query(`INSERT INTO employees (${data.first}, ${data.last}, ${roleID}, ${manager}`), (err, result) => {
+        let roleID = 1;
+        let managerID = 1;
+        if (data.choices === 'Clinic Manager') {
+            roleID = 1;
+            managerID = 'null';
+        }
+        else if (data.choices === 'Nurse') {
+            roleID = 2;
+            managerID = 1;
+        } else if (data.choices === 'Medical Assistant') {
+            roleID = 2;
+            managerID = 1;
+        } else if (data.choices === 'Sonography Manager') {
+            roleID = 3;
+            managerID = 'null';
+        } else if (data.choices === 'Sonographer') {
+            roleID = 3;
+            managerID = 4;
+        }
+        db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${data.first}", "${data.last}", ${roleID}, ${managerID})`, (err, result) => {
             if (err) {
                 console.log(err);
             }
             console.table(result);
             menu();
-        }
+        })
     });
-};
-
-function setRoleIDandManagerID(data) {
-    if (data.choices === 'Clinic Manager') {
-        roleID = 1;
-        manager = '';
-        console.log("Clinic Manager picked")
-    }
-    else if (data.choices === 'Nurse') {
-        roleID = 2;
-        manager = '';
-        console.log("Nurse picked")
-    } else if (data.choices === 'Medical Assistant') {
-        roleID = 2;
-        manager = '';
-        console.log("Medical Assistant picked")
-    } else if (data.choices === 'Sonography Manager') {
-        roleID = 3;
-        manager = '';
-        console.log("Sonography Manager picked")
-    } else if (data.choices === 'Sonographer') {
-        roleID = 3;
-        manager = '';
-        console.log("Sonographer picked")
-    }
 };
 
 function updateEmployee() {
