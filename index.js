@@ -53,26 +53,21 @@ function menu() {
                 viewAllDepartments();
             } else if (data.nextstep === 'Add Department') {
                 addDepartment();
-            } else {
-                finish();
             }
         })
 };
 
 // ====================Menu options====================
 function viewAllEmployees() {
-    console.log("viewing all employees");
     // WHEN I choose to view all employees
     // THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-    db.query("SELECT * FROM employees;"),
-        function (err, res) {
-            if (err) {
-                console.log("ERROR!");
-                console.log(err);
-            }
-            console.table(res);
-            menu();
+    db.query(`SELECT * FROM employees JOIN roles ON employees.role_id = roles.id`, (err, result) => {
+        if (err) {
+            console.log(err);
         }
+        console.table(result);
+        menu();
+    });
 };
 
 function addEmployee() {

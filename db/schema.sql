@@ -16,7 +16,6 @@ CREATE TABLE roles (
     department_id INT, 
     PRIMARY KEY (id),
     FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE SET NULL
-        -- department_id: INT to hold reference to department role belongs to
 ); 
 
 
@@ -26,10 +25,7 @@ CREATE TABLE employees (
     last_name VARCHAR(30) NOT NULL,
     role_id INT,
     manager_id INT, 
-        -- manager_id: INT to hold reference to another employee that is the manager of the current employee (null if the employee has no manager)
     PRIMARY KEY (id),
-    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE SET NULL
-    -- FOREIGN KEY (manager_id) REFERENCES 
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE SET NULL,
+    FOREIGN KEY (manager_id) REFERENCES employees(id) ON DELETE SET NULL
 );
-
--- how to complete manager_id FOREIGN KEY? 
