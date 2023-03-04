@@ -184,11 +184,6 @@ function addDepartment() {
     // THEN I am prompted to enter the name of the department and that department is added to the database
 };
 
-function finish() {
-    console.log("finished with menu");
-    // What to do when finished? Just display all data? 
-};
-
 menu();
 
 //====================Default response for any other request====================
