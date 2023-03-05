@@ -171,7 +171,11 @@ function updateEmployee() {
                 let roleID = rolesArray.indexOf(data.role) + 1;
                 let employeeID = employeeArray.indexOf(data.employee) + 1;
                 db.query(`UPDATE employees SET role_id = ${roleID} WHERE id = ${employeeID}`, (err, result) => {
-                    console.log(result);
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.table(result);
+                    menu();
                 })
             })
         })
