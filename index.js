@@ -140,9 +140,43 @@ function addEmployee() {
 };
 
 function updateEmployee() {
-    console.log("updated employee");
-    // WHEN I choose to update an employee role
-    // THEN I am prompted to select an employee to update and their new role and this information is updated in the database
+    db.query(`SELECT * FROM employees`, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        let employeeArray = [];
+        for (let i = 0; i < result.length; i++) {
+            const e = result[i].first_name + " " + result[i].last_name;
+            employeeArray.push(e)
+        }
+        db.query(`SELECT * FROM roles`, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            let rolesArray = [];
+            for (let i = 0; i < result.length; i++) {
+                rolesArray.push(result[i].title)
+            }
+            inquirer.prompt([{
+                type: 'list',
+                message: 'Which employee would you like to update?',
+                choices: employeeArray,
+                name: 'employee'
+            }, {
+                type: 'list',
+                message: "What is the employee's role?",
+                choices: rolesArray,
+                name: 'role'
+            }]).then((data) => {
+                let roleID = rolesArray.indexOf(data.role) + 1;
+                let employeeID = employeeArray.indexOf(data.employee) + 1;
+                db.query(`UPDATE employees SET role_id = ${roleID} WHERE id = ${employeeID}`, (err, result) => {
+                    console.log(result);
+                })
+            })
+        })
+    });
+
 };
 
 function viewAllRoles() {
