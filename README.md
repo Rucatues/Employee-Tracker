@@ -20,7 +20,11 @@ The Employee Tracker utilizes Mysql2 and Express in Node.js to give the user a s
 
 ## Screenshots
 
-![Terminal-Example](./assets/Screenshot 2023-03-04 at 10.57.48 AM.png)  
+![Terminal-Example](./assets/Screenshot.png)  
+
+## Video Walkthrough
+
+[Video Walkthrough](https://drive.google.com/file/d/1I7m2AvAscdkU8jfsbctQH0EniOxzuj00/view)
 
 ## Usage
 

@@ -99,7 +99,6 @@ function addEmployee() {
                 const m = results[i].first_name + " " + results[i].last_name;
                 managerArray.push(m)
             }
-            console.log(rolesArray)
             inquirer.prompt([{
                 type: 'input',
                 message: "What is Employee's first name?",
@@ -219,7 +218,6 @@ function addRole() {
         }
         ]).then((data) => {
             let departmentID = departmentArray.indexOf(data.department) + 1;
-            console.log(departmentID)
             db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${data.title}", ${data.salary}, ${departmentID});`, function (err, result) {
                 if (err) {
                     console.log(err);
